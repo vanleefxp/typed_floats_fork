@@ -8,17 +8,17 @@ use crate::{
 
 macro_rules! impl_eq_self {
     ($type:ident) => {
-        impl Eq for $type<f32> {}
-        impl Eq for $type<f64> {}
+        const impl Eq for $type<f32> {}
+        const impl Eq for $type<f64> {}
 
-        impl PartialEq for $type<f32> {
+        const impl PartialEq for $type<f32> {
             #[inline]
             fn eq(&self, other: &Self) -> bool {
                 self.0 == other.0
             }
         }
 
-        impl PartialEq for $type<f64> {
+        const impl PartialEq for $type<f64> {
             #[inline]
             fn eq(&self, other: &Self) -> bool {
                 self.0 == other.0
@@ -29,28 +29,28 @@ macro_rules! impl_eq_self {
 
 macro_rules! impl_eq_base {
     ($type:ident) => {
-        impl PartialEq<$type<f32>> for f32 {
+        const impl PartialEq<$type<f32>> for f32 {
             #[inline]
             fn eq(&self, other: &$type<f32>) -> bool {
                 *self == other.0
             }
         }
 
-        impl PartialEq<$type<f64>> for f64 {
+        const impl PartialEq<$type<f64>> for f64 {
             #[inline]
             fn eq(&self, other: &$type<f64>) -> bool {
                 *self == other.0
             }
         }
 
-        impl PartialEq<f32> for $type<f32> {
+        const impl PartialEq<f32> for $type<f32> {
             #[inline]
             fn eq(&self, other: &f32) -> bool {
                 self.0 == *other
             }
         }
 
-        impl PartialEq<f64> for $type<f64> {
+        const impl PartialEq<f64> for $type<f64> {
             #[inline]
             fn eq(&self, other: &f64) -> bool {
                 self.0 == *other
@@ -62,17 +62,17 @@ macro_rules! impl_eq_base {
 // This fast implementation can only be used for types that rejects `-0.0` and/or `+0.0`
 macro_rules! impl_fast_eq_self {
     ($type:ident) => {
-        impl Eq for $type<f32> {}
-        impl Eq for $type<f64> {}
+        const impl Eq for $type<f32> {}
+        const impl Eq for $type<f64> {}
 
-        impl PartialEq for $type<f32> {
+        const impl PartialEq for $type<f32> {
             #[inline]
             fn eq(&self, other: &Self) -> bool {
                 self.0.to_bits() == other.0.to_bits()
             }
         }
 
-        impl PartialEq for $type<f64> {
+        const impl PartialEq for $type<f64> {
             #[inline]
             fn eq(&self, other: &Self) -> bool {
                 self.0.to_bits() == other.0.to_bits()

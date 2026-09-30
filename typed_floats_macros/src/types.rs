@@ -157,6 +157,7 @@ pub struct Op {
     pub(crate) params: proc_macro2::TokenStream,
     pub(crate) description: proc_macro2::TokenStream,
     pub(crate) skip_check_return_type_strictness: bool,
+    pub(crate) is_const: bool,
     op: OpCallback,
     result: ResultCallback,
     test: TestCallback,
@@ -179,6 +180,7 @@ impl OpBuilder {
                 trait_name: None,
                 description: proc_macro2::TokenStream::new(),
                 comment: None,
+                is_const: false,
                 skip_check_return_type_strictness: false,
                 op: Box::new(move |_| quote! { self.get().#fn_op() }),
                 result: Box::new(|_, _| panic!("No result defined")),
@@ -240,6 +242,11 @@ impl OpBuilder {
         self
     }
 
+    pub fn is_const(mut self) -> Self {
+        self.op.is_const = true;
+        self
+    }
+
     pub fn build(self) -> Op {
         self.op
     }
@@ -288,18 +295,16 @@ impl Op {
         };
 
         let output_name = output_name(&output, &float.float_type_ident());
-
         let fn_ident = Ident::new(self.fn_name, Span::call_site());
-
+        let const_ident = self.is_const.then(|| quote! { const });
         let description = &self.description;
-
         let params = &self.params;
 
         if let Some(trait_name) = &self.trait_name {
             let trait_name: proc_macro2::TokenStream = trait_name.parse().unwrap();
 
             quote! {
-                impl #trait_name for #float_full_type {
+                #const_ident impl #trait_name for #float_full_type {
                     type Output = #output_name;
 
                     #description
@@ -316,7 +321,7 @@ impl Op {
                     #description
                     #[inline]
                     #[must_use]
-                    pub fn #fn_ident(#params) -> #output_name {
+                    pub #const_ident fn #fn_ident(#params) -> #output_name {
                         #return_value
                     }
                 }
@@ -355,6 +360,7 @@ impl OpRhsBuilder {
                 op_is_commutative: false,
                 skip_check_return_type_strictness: false,
                 comment: None,
+                is_const: false,
                 op: Box::new(move |_, _| quote! { self.get().#fn_op(rhs.get()) }),
                 result: Box::new(|_, _, _| panic!("No result defined")),
                 test: Box::new(move |var1, var2| quote! { #trait_ident1::#fn_test1(#var1,#var2) }),
@@ -430,6 +436,11 @@ impl OpRhsBuilder {
         self
     }
 
+    pub(crate) fn is_const(mut self) -> Self {
+        self.op.is_const = true;
+        self
+    }
+
     pub(crate) fn build(self) -> OpRhs {
         self.op
     }
@@ -444,6 +455,7 @@ pub struct OpRhs {
     pub(crate) op_is_commutative: bool,
     pub(crate) skip_check_return_type_strictness: bool,
     pub(crate) comment: Option<&'static str>,
+    pub(crate) is_const: bool,
     op: OpRhsCallback,
     result: ResultRhsCallback,
     test: TestRhsCallback,
@@ -510,9 +522,9 @@ impl OpRhs {
 
         let trait_ident: syn::Path = syn::parse_str(self.trait_name).unwrap();
         let fn_ident = Ident::new(self.fn_name, Span::call_site());
-
+        let const_ident = self.is_const.then(|| quote! { const });
         let mut res = quote! {
-            impl #trait_ident<#rhs_full_type> for #float_full_type {
+            #const_ident impl #trait_ident<#rhs_full_type> for #float_full_type {
                 type Output = #output_name;
 
                 #[inline]
@@ -529,7 +541,7 @@ impl OpRhs {
                     let fn_assign_ident = Ident::new(assign_fn, Span::call_site());
 
                     res.extend(quote! {
-                        impl #trait_assign_ident<#rhs_full_type> for #float_full_type {
+                        #const_ident impl #trait_assign_ident<#rhs_full_type> for #float_full_type {
                             #[inline]
                             fn #fn_assign_ident(&mut self, rhs: #rhs_full_type) {
                                 unsafe {

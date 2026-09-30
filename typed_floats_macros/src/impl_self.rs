@@ -7,6 +7,7 @@ pub fn get_impl_self() -> Vec<Op> {
         OpBuilder::new("neg")
             .trait_name("core::ops::Neg")
             .display("-")
+            .is_const()
             .op_fn(Box::new(|_| {
                 quote! { -self.get() }
             }))
@@ -29,6 +30,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("abs")
+            .is_const()
             .description(quote! {
                 /// Computes the absolute value of `self`.
                 ///
@@ -71,6 +73,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("ceil")
+            .is_const()
             .description(quote! {
                 /// Returns the smallest integer greater than or equal to `self`.
                 ///
@@ -102,6 +105,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("floor")
+            .is_const()
             .description(quote! {
                 /// Returns the largest integer less than or equal to `self`.
                 ///
@@ -133,6 +137,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("round")
+            .is_const()
             .description(quote! {
                 /// Returns the nearest integer to `self`. If a value is half-way between two
                 /// integers, round away from `0.0`.
@@ -163,6 +168,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("trunc")
+            .is_const()
             .description(quote! {
                 /// Returns the integer part of `self`.
                 /// This means that non-integer numbers are always truncated towards zero.
@@ -193,6 +199,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("fract")
+            .is_const()
             .description(quote! {
                 /// Returns the fractional part of `self`.
                 /// For negative numbers, the result is negative except when the fractional part is zero.
@@ -233,6 +240,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .build(),
         #[cfg(any(feature = "std", feature = "libm"))]
         OpBuilder::new("signum")
+            .is_const()
             .description(quote! {
                 /// Returns a number that represents the sign of `self`.
                 ///
@@ -544,6 +552,7 @@ pub fn get_impl_self() -> Vec<Op> {
             }))
             .build(),
         OpBuilder::new("to_degrees")
+            .is_const()
             .description(quote! {
                 /// Converts degrees to radians.
                 ///
@@ -577,6 +586,7 @@ pub fn get_impl_self() -> Vec<Op> {
             }))
             .build(),
         OpBuilder::new("to_radians")
+            .is_const()
             .description(quote! {
                 /// Converts degrees to radians.
                 ///
@@ -1080,6 +1090,7 @@ pub fn get_impl_self() -> Vec<Op> {
             .result(Box::new(|_| ReturnTypeSpecification::NativeFloat))
             .build(),
         OpBuilder::new("recip")
+            .is_const()
             .description(quote! {
                 /// Takes the reciprocal (inverse) of a number, `1/x`.
                 ///
@@ -1162,6 +1173,7 @@ pub fn get_impl_self() -> Vec<Op> {
 
     if rustversion::cfg!(since(1.86)) {
         let next_up = OpBuilder::new("next_up")
+            .is_const()
             .description(quote! {
                 /// Returns the least number greater than `self``.
                 ///
@@ -1180,6 +1192,7 @@ pub fn get_impl_self() -> Vec<Op> {
         ops.push(next_up.build());
 
         let next_down = OpBuilder::new("next_down")
+            .is_const()
             .description(quote! {
                 /// Returns the greatest number less than `self``.
                 ///

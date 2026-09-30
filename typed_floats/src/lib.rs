@@ -1,3 +1,11 @@
+#![feature(
+    const_trait_impl,
+    const_ops,
+    const_convert,
+    const_clone,
+    const_cmp,
+    derive_const
+)]
 #![doc = include_str!("../README.truncated.md")]
 //! # Rules
 //!

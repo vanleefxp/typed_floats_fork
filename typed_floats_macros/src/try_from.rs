@@ -7,7 +7,7 @@ fn impl_from(float_from: &FloatDefinition, float_to: &FloatDefinition) -> proc_m
     let to_full_type = &float_to.full_type_ident();
 
     quote! {
-        impl core::convert::From<#from_full_type> for #to_full_type {
+        const impl core::convert::From<#from_full_type> for #to_full_type {
             #[inline]
             #[must_use]
             fn from(value: #from_full_type) -> Self {
@@ -25,7 +25,7 @@ fn impl_try_from(
     let to_full_type = &float_to.full_type_ident();
 
     quote! {
-        impl core::convert::TryFrom<#from_full_type> for #to_full_type {
+        const impl core::convert::TryFrom<#from_full_type> for #to_full_type {
             type Error = InvalidNumber;
 
             #[inline]

@@ -23,7 +23,8 @@ impl std::error::Error for FromStrError {}
 use serde::Serialize;
 
 /// An error that can occur when converting into a typed float
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug)]
+#[derive_const(Eq, PartialEq)]
 pub enum InvalidNumber {
     /// Any variant of `Nan`
     NaN,
@@ -57,7 +58,8 @@ impl std::error::Error for InvalidNumber {}
 /// It satisfies the following constraints:
 /// - It is not NaN.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct NonNaN<T = f64>(T);
 
@@ -67,7 +69,8 @@ pub struct NonNaN<T = f64>(T);
 /// - It is not NaN.
 /// - It is not zero.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct NonZeroNonNaN<T = f64>(T);
 
@@ -77,7 +80,8 @@ pub struct NonZeroNonNaN<T = f64>(T);
 /// - It is not NaN.
 /// - It is not infinite.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct NonNaNFinite<T = f64>(T);
 
@@ -88,7 +92,8 @@ pub struct NonNaNFinite<T = f64>(T);
 /// - It is not infinite.
 /// - It is not zero.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct NonZeroNonNaNFinite<T = f64>(T);
 
@@ -98,7 +103,8 @@ pub struct NonZeroNonNaNFinite<T = f64>(T);
 /// - It is not NaN.
 /// - It is not negative.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct Positive<T = f64>(T);
 
@@ -108,7 +114,8 @@ pub struct Positive<T = f64>(T);
 /// - It is not NaN.
 /// - It is not positive.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct Negative<T = f64>(T);
 
@@ -119,7 +126,8 @@ pub struct Negative<T = f64>(T);
 /// - It is not infinite.
 /// - It is not negative.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct PositiveFinite<T = f64>(T);
 
@@ -130,7 +138,8 @@ pub struct PositiveFinite<T = f64>(T);
 /// - It is not infinite.
 /// - It is not positive.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct NegativeFinite<T = f64>(T);
 
@@ -141,7 +150,8 @@ pub struct NegativeFinite<T = f64>(T);
 /// - It is not zero.
 /// - It is not negative.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct StrictlyPositive<T = f64>(T);
 
@@ -152,7 +162,8 @@ pub struct StrictlyPositive<T = f64>(T);
 /// - It is not zero.
 /// - It is not positive.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct StrictlyNegative<T = f64>(T);
 
@@ -162,7 +173,8 @@ pub struct StrictlyNegative<T = f64>(T);
 /// - It is not NaN.
 /// - It is not negative.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct StrictlyPositiveFinite<T = f64>(T);
 
@@ -172,7 +184,8 @@ pub struct StrictlyPositiveFinite<T = f64>(T);
 /// - It is not NaN.
 /// - It is not positive.
 #[cfg_attr(feature = "serde", derive(Serialize))]
-#[derive(Debug, Copy, Clone)]
+#[derive(Debug, Copy)]
+#[derive_const(Clone)]
 #[repr(transparent)]
 pub struct StrictlyNegativeFinite<T = f64>(T);
 

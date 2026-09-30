@@ -1,6 +1,6 @@
 #[cfg(any(feature = "std", feature = "libm"))]
 /// This trait is used to specify the return type of the [`Hypot::hypot()`] function.
-pub trait Hypot<T> {
+pub const trait Hypot<T> {
     /// The resulting type after applying [`Hypot::hypot()`].
     type Output;
 
@@ -24,7 +24,7 @@ pub trait Hypot<T> {
 }
 
 /// This trait is used to specify the return type of the [`Min::min()`] function.
-pub trait Min<T> {
+pub const trait Min<T> {
     /// The resulting type after applying [`Min::min()`].
     type Output;
 
@@ -51,7 +51,7 @@ pub trait Min<T> {
 }
 
 /// This trait is used to specify the return type of the [`Max::max()`] function.
-pub trait Max<T> {
+pub const trait Max<T> {
     /// The resulting type after applying [`Max::max()`].
     type Output;
 
@@ -79,7 +79,7 @@ pub trait Max<T> {
 
 #[cfg(any(feature = "std", feature = "libm"))]
 /// This trait is used to specify the return type of the [`Copysign::copysign()`] function.
-pub trait Copysign<T> {
+pub const trait Copysign<T> {
     /// The resulting type after applying [`Copysign::copysign()`].
     type Output;
 
@@ -114,7 +114,7 @@ pub trait Copysign<T> {
 
 #[cfg(any(feature = "std", feature = "libm"))]
 /// This trait is used to specify the return type of the [`DivEuclid::div_euclid()`] function.
-pub trait DivEuclid<T> {
+pub const trait DivEuclid<T> {
     /// The resulting type after applying [`DivEuclid::div_euclid()`].
     type Output;
 
@@ -145,7 +145,7 @@ pub trait DivEuclid<T> {
 
 #[cfg(any(feature = "std", feature = "libm"))]
 /// This trait is used to specify the return type of the [`Atan2::atan2()`] function.
-pub trait Atan2<T> {
+pub const trait Atan2<T> {
     /// The resulting type after applying [`Atan2::atan2()`].
     type Output;
 
@@ -183,7 +183,7 @@ pub trait Atan2<T> {
 
 #[cfg(any(feature = "std", feature = "libm"))]
 /// This trait is used to specify the return type of the [`Powf::powf()`] function.
-pub trait Powf<T> {
+pub const trait Powf<T> {
     /// The resulting type after applying [`Powf::powf()`].
     type Output;
 
@@ -192,7 +192,7 @@ pub trait Powf<T> {
 }
 
 /// This trait is used to specify the return type of the [`Midpoint::midpoint()`] function.
-pub trait Midpoint<T> {
+pub const trait Midpoint<T> {
     /// The resulting type after applying [`Midpoint::midpoint()`].
     type Output;
 

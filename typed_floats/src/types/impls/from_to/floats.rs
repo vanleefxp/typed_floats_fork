@@ -7,7 +7,7 @@ use crate::{
 macro_rules! impl_from {
     ($test:ident, $type:ident) => {
         #[cfg(feature = "f32")]
-        impl From<$type<Self>> for f32 {
+        const impl From<$type<Self>> for f32 {
             #[inline]
             fn from(value: $type<Self>) -> Self {
                 value.0
@@ -15,7 +15,7 @@ macro_rules! impl_from {
         }
 
         #[cfg(feature = "f64")]
-        impl From<$type<Self>> for f64 {
+        const impl From<$type<Self>> for f64 {
             #[inline]
             fn from(value: $type<Self>) -> Self {
                 value.0
@@ -23,7 +23,7 @@ macro_rules! impl_from {
         }
 
         #[cfg(feature = "f32")]
-        impl TryFrom<f32> for $type<f32> {
+        const impl TryFrom<f32> for $type<f32> {
             type Error = InvalidNumber;
 
             #[inline]
@@ -33,7 +33,7 @@ macro_rules! impl_from {
         }
 
         #[cfg(feature = "f64")]
-        impl TryFrom<f64> for $type<f64> {
+        const impl TryFrom<f64> for $type<f64> {
             type Error = InvalidNumber;
 
             #[inline]
