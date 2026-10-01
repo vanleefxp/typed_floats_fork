@@ -84,28 +84,28 @@ macro_rules! impl_fast_eq_self {
 // This fast implementation can only be used for types that rejects `-0.0` AND `+0.0`
 macro_rules! impl_fast_eq_base {
     ($type:ident) => {
-        impl PartialEq<$type<f32>> for f32 {
+        const impl PartialEq<$type<f32>> for f32 {
             #[inline]
             fn eq(&self, other: &$type<f32>) -> bool {
                 self.to_bits() == (&other.0).to_bits()
             }
         }
 
-        impl PartialEq<$type<f64>> for f64 {
+        const impl PartialEq<$type<f64>> for f64 {
             #[inline]
             fn eq(&self, other: &$type<f64>) -> bool {
                 self.to_bits() == (&other.0).to_bits()
             }
         }
 
-        impl PartialEq<f32> for $type<f32> {
+        const impl PartialEq<f32> for $type<f32> {
             #[inline]
             fn eq(&self, other: &f32) -> bool {
                 (&self.0).to_bits() == other.to_bits()
             }
         }
 
-        impl PartialEq<f64> for $type<f64> {
+        const impl PartialEq<f64> for $type<f64> {
             #[inline]
             fn eq(&self, other: &f64) -> bool {
                 (&self.0).to_bits() == other.to_bits()

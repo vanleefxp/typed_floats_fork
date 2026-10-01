@@ -9,7 +9,7 @@ use crate::{
 macro_rules! impl_ord {
     ($type:ident) => {
         #[cfg(feature = "f32")]
-        impl Ord for $type<f32> {
+        const impl Ord for $type<f32> {
             #[inline]
             fn cmp(&self, other: &Self) -> core::cmp::Ordering {
                 #[allow(clippy::float_cmp)]
@@ -24,7 +24,7 @@ macro_rules! impl_ord {
         }
 
         #[cfg(feature = "f64")]
-        impl Ord for $type<f64> {
+        const impl Ord for $type<f64> {
             #[inline]
             fn cmp(&self, other: &Self) -> core::cmp::Ordering {
                 #[allow(clippy::float_cmp)]
@@ -43,7 +43,7 @@ macro_rules! impl_ord {
 macro_rules! impl_fast_ord {
     ($type:ident) => {
         #[cfg(feature = "f32")]
-        impl Ord for $type<f32> {
+        const impl Ord for $type<f32> {
             #[inline]
             fn cmp(&self, other: &Self) -> core::cmp::Ordering {
                 self.get().to_bits().cmp(&other.get().to_bits())
@@ -51,7 +51,7 @@ macro_rules! impl_fast_ord {
         }
 
         #[cfg(feature = "f64")]
-        impl Ord for $type<f64> {
+        const impl Ord for $type<f64> {
             #[inline]
             fn cmp(&self, other: &Self) -> core::cmp::Ordering {
                 self.get().to_bits().cmp(&other.get().to_bits())
@@ -63,7 +63,7 @@ macro_rules! impl_fast_ord {
 macro_rules! impl_fast_inv_ord {
     ($type:ident) => {
         #[cfg(feature = "f32")]
-        impl Ord for $type<f32> {
+        const impl Ord for $type<f32> {
             #[inline]
             fn cmp(&self, other: &Self) -> core::cmp::Ordering {
                 other.get().to_bits().cmp(&self.get().to_bits())
@@ -71,7 +71,7 @@ macro_rules! impl_fast_inv_ord {
         }
 
         #[cfg(feature = "f64")]
-        impl Ord for $type<f64> {
+        const impl Ord for $type<f64> {
             #[inline]
             fn cmp(&self, other: &Self) -> core::cmp::Ordering {
                 other.get().to_bits().cmp(&self.get().to_bits())
@@ -83,7 +83,7 @@ macro_rules! impl_fast_inv_ord {
 macro_rules! impl_partial_ord {
     ($type:ident) => {
         #[cfg(feature = "f32")]
-        impl PartialOrd for $type<f32> {
+        const impl PartialOrd for $type<f32> {
             #[inline]
             fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
                 Some(self.cmp(other))
@@ -91,7 +91,7 @@ macro_rules! impl_partial_ord {
         }
 
         #[cfg(feature = "f32")]
-        impl PartialOrd<f32> for $type<f32> {
+        const impl PartialOrd<f32> for $type<f32> {
             #[inline]
             fn partial_cmp(&self, other: &f32) -> Option<core::cmp::Ordering> {
                 self.get().partial_cmp(other)
@@ -99,7 +99,7 @@ macro_rules! impl_partial_ord {
         }
 
         #[cfg(feature = "f32")]
-        impl PartialOrd<$type<f32>> for f32 {
+        const impl PartialOrd<$type<f32>> for f32 {
             #[inline]
             fn partial_cmp(&self, other: &$type<f32>) -> Option<core::cmp::Ordering> {
                 self.partial_cmp(&other.0)
@@ -107,7 +107,7 @@ macro_rules! impl_partial_ord {
         }
 
         #[cfg(feature = "f64")]
-        impl PartialOrd for $type<f64> {
+        const impl PartialOrd for $type<f64> {
             #[inline]
             fn partial_cmp(&self, other: &Self) -> Option<core::cmp::Ordering> {
                 Some(self.cmp(other))
@@ -115,7 +115,7 @@ macro_rules! impl_partial_ord {
         }
 
         #[cfg(feature = "f64")]
-        impl PartialOrd<f64> for $type<f64> {
+        const impl PartialOrd<f64> for $type<f64> {
             #[inline]
             fn partial_cmp(&self, other: &f64) -> Option<core::cmp::Ordering> {
                 self.get().partial_cmp(other)
@@ -123,7 +123,7 @@ macro_rules! impl_partial_ord {
         }
 
         #[cfg(feature = "f64")]
-        impl PartialOrd<$type<f64>> for f64 {
+        const impl PartialOrd<$type<f64>> for f64 {
             #[inline]
             fn partial_cmp(&self, other: &$type<f64>) -> Option<core::cmp::Ordering> {
                 self.partial_cmp(&other.0)

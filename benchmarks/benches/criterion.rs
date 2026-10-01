@@ -1,4 +1,5 @@
-use criterion::{Criterion, black_box, criterion_group, criterion_main};
+use criterion::{Criterion, criterion_group, criterion_main};
+use std::hint::black_box;
 
 use typed_floats::{NonNaN, NonZeroNonNaN, Positive};
 
@@ -41,7 +42,7 @@ pub fn criterion_benchmark(c: &mut Criterion) {
         b.iter(|| {
             for i in &valid_values_f32 {
                 let mut s = DefaultHasher::new();
-                let hash = i.hash(&mut s);
+                let _hash = i.hash(&mut s);
                 black_box(s.finish());
             }
         });
